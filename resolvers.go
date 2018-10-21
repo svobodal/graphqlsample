@@ -7,7 +7,7 @@ type UserResolver struct {
 }
 
 func (resolver *UserResolver) Id() int32 {
-	return resolver.user.ID
+	return resolver.user.Id
 }
 
 func (resolver *UserResolver) Name() string {
@@ -23,7 +23,7 @@ type CommentResolver struct {
 }
 
 func (resolver *CommentResolver) Id() int32 {
-	return resolver.comment.ID
+	return resolver.comment.Id
 }
 
 func (resolver *CommentResolver) Text() string {
@@ -44,7 +44,7 @@ type VideoResolver struct {
 }
 
 func (resolver *VideoResolver) Id() int32 {
-	return resolver.video.ID
+	return resolver.video.Id
 }
 
 func (resolver *VideoResolver) Name() string {
@@ -69,7 +69,7 @@ func (resolver *VideoResolver) Creator() *UserResolver {
 
 func (resolver *VideoResolver) Comments(args struct{ Count int32 }) []*CommentResolver {
 	list := make([]*CommentResolver, 0)
-	comments, err := Model.GetCommentForVideo(resolver.video.ID)
+	comments, err := Model.GetCommentForVideo(resolver.video.Id)
 	if err != nil {
 		panic(err)
 	}
@@ -86,7 +86,7 @@ func (resolver *VideoResolver) Comments(args struct{ Count int32 }) []*CommentRe
 
 func (resolver *VideoResolver) Related(args struct{ Count int32 }) []*VideoResolver {
 	list := make([]*VideoResolver, 0)
-	related, err := Model.GetRelatedVideos(resolver.video.ID)
+	related, err := Model.GetRelatedVideos(resolver.video.Id)
 	if err != nil {
 		panic(err)
 	}

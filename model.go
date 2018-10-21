@@ -8,13 +8,13 @@ import (
 var ErrNotFound = errors.New("Not found")
 
 type User struct {
-	ID    int32
+	Id    int32
 	Name  string
 	Email string
 }
 
 type Video struct {
-	ID           int32
+	Id           int32
 	Name         string
 	Views        int32
 	Description  string
@@ -23,7 +23,7 @@ type Video struct {
 }
 
 type Comment struct {
-	ID           int32
+	Id           int32
 	Video        *Video
 	User         *User
 	CreationTime time.Time
@@ -40,7 +40,7 @@ var Model *model
 
 func (m *model) GetUser(id int32) (*User, error) {
 	for _, u := range m.Users {
-		if u.ID == id {
+		if u.Id == id {
 			return u, nil
 		}
 	}
@@ -50,7 +50,7 @@ func (m *model) GetUser(id int32) (*User, error) {
 
 func (m *model) GetVideo(id int32) (*Video, error) {
 	for _, v := range m.Videos {
-		if v.ID == id {
+		if v.Id == id {
 			return v, nil
 		}
 	}
@@ -61,7 +61,7 @@ func (m *model) GetVideo(id int32) (*Video, error) {
 func (m *model) GetCommentForVideo(videoId int32) ([]*Comment, error) {
 	list := make([]*Comment, 0)
 	for _, c := range m.Comments {
-		if c.Video.ID == videoId {
+		if c.Video.Id == videoId {
 			list = append(list, c)
 		}
 	}
@@ -72,7 +72,7 @@ func (m *model) GetCommentForVideo(videoId int32) ([]*Comment, error) {
 func (m *model) GetRelatedVideos(videoId int32) ([]*Video, error) {
 	list := make([]*Video, 0)
 	for _, r := range m.Videos {
-		if r.ID != videoId {
+		if r.Id != videoId {
 			list = append(list, r)
 		}
 	}
@@ -82,23 +82,23 @@ func (m *model) GetRelatedVideos(videoId int32) ([]*Video, error) {
 
 func init() {
 	u1 := &User{
-		ID:    1,
+		Id:    1,
 		Name:  "Charles",
 		Email: "charles@example.com",
 	}
 	u2 := &User{
-		ID:    2,
+		Id:    2,
 		Name:  "Richard",
 		Email: "Richard@example.com",
 	}
 	u3 := &User{
-		ID:    3,
+		Id:    3,
 		Name:  "Rob",
 		Email: "rob@example.com",
 	}
 
 	v1 := &Video{
-		ID:           10,
+		Id:           10,
 		Name:         "Funny cat",
 		CreationTime: time.Now().Add(-5 * time.Hour),
 		Views:        700,
@@ -107,7 +107,7 @@ func init() {
 	}
 
 	v2 := &Video{
-		ID:           20,
+		Id:           20,
 		Name:         "Running dog",
 		CreationTime: time.Now().Add(-10 * time.Hour),
 		Views:        1500,
@@ -116,7 +116,7 @@ func init() {
 	}
 
 	v3 := &Video{
-		ID:           30,
+		Id:           30,
 		Name:         "Hamster eating",
 		CreationTime: time.Now().Add(-15 * time.Hour),
 		Views:        1200,
@@ -126,14 +126,14 @@ func init() {
 
 	comments := []*Comment{
 		&Comment{
-			ID:           11,
+			Id:           11,
 			Video:        v1,
 			User:         u2,
 			CreationTime: time.Now().Add(-4 * time.Hour),
 			Text:         "Cute!",
 		},
 		&Comment{
-			ID:           12,
+			Id:           12,
 			Video:        v1,
 			User:         u3,
 			CreationTime: time.Now().Add(-3 * time.Hour),
