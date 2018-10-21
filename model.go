@@ -58,7 +58,7 @@ func (m *model) GetVideo(id int32) (*Video, error) {
 	return nil, ErrNotFound
 }
 
-func (m *model) GetCommentForVideo(videoId int32) ([]*Comment, error) {
+func (m *model) GetCommentsForVideo(videoId int32) ([]*Comment, error) {
 	list := make([]*Comment, 0)
 	for _, c := range m.Comments {
 		if c.Video.Id == videoId {
@@ -74,6 +74,17 @@ func (m *model) GetRelatedVideos(videoId int32) ([]*Video, error) {
 	for _, r := range m.Videos {
 		if r.Id != videoId {
 			list = append(list, r)
+		}
+	}
+
+	return list, nil
+}
+
+func (m *model) GetVideosForUser(userId int32) ([]*Video, error) {
+	list := make([]*Video, 0)
+	for _, v := range m.Videos {
+		if v.Creator.Id == userId {
+			list = append(list, v)
 		}
 	}
 

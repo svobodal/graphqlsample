@@ -73,7 +73,7 @@ func init() {
 				},
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					video := p.Source.(*graphqlsample.Video)
-					comments, err := graphqlsample.Model.GetCommentForVideo(video.Id)
+					comments, err := graphqlsample.Model.GetCommentsForVideo(video.Id)
 					if err != nil {
 						return nil, err
 					}
@@ -113,6 +113,30 @@ func init() {
 		},
 	})
 
+	UserResolver.AddFieldConfig("videos", &graphql.Field{
+		Type: graphql.NewList(VideoResolver),
+		Args: graphql.FieldConfigArgument{
+			"count": &graphql.ArgumentConfig{
+				Type:         graphql.Int,
+				DefaultValue: -1,
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			user := p.Source.(*graphqlsample.User)
+			videos, err := graphqlsample.Model.GetVideosForUser(user.Id)
+			if err != nil {
+				return nil, err
+			}
+
+			count := p.Args["count"].(int)
+			if count < 0 || count > len(videos) {
+				count = len(videos)
+			}
+
+			return videos[0:count], nil
+		},
+	})
+
 	QueryResolver = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
@@ -126,6 +150,18 @@ func init() {
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					id := int32(p.Args["id"].(int))
 					return graphqlsample.Model.GetVideo(id)
+				},
+			},
+			"user": &graphql.Field{
+				Type: UserResolver,
+				Args: graphql.FieldConfigArgument{
+					"id": &graphql.ArgumentConfig{
+						Type: graphql.Int,
+					},
+				},
+				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+					id := int32(p.Args["id"].(int))
+					return graphqlsample.Model.GetUser(id)
 				},
 			},
 		},

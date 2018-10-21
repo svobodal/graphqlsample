@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	graphqlsample "../.."
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 )
@@ -15,7 +14,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	schema := graphql.MustParseSchema(string(schemaData), &graphqlsample.Query{})
+	schema := graphql.MustParseSchema(string(schemaData), &QueryResolver{})
 
 	log.Printf("Listening on :7070")
 	http.Handle("/query", &relay.Handler{Schema: schema})

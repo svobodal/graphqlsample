@@ -2,6 +2,7 @@ type User {
     id: Int!
     name: String!
     email: String
+    videos(count: Int = -1): [Video]!
 }
 
 type Comment {
@@ -22,6 +23,7 @@ type Video {
 
 type Query {
     video(id: Int!): Video
+    user(id: Int!): User
 }
 
 schema {
