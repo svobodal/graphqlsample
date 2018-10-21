@@ -13,6 +13,7 @@ type Comment {
 type Video {
     id: Int!
     name: String!
+    description: String!
     views: Int!
     creator: User!
     related(count: Int = -1): [Video]!
