@@ -1,0 +1,28 @@
+type User {
+    id: Int!
+    name: String!
+    email: String
+}
+
+type Comment {
+    id: Int!
+    text: String!
+    creator: User!
+}
+
+type Video {
+    id: Int!
+    name: String!
+    views: Int!
+    creator: User!
+    related(count: Int = -1): [Video]!
+    comments(count: Int = -1): [Comment]!
+}
+
+type Query {
+    video(id: Int!): Video
+}
+
+schema {
+    query: Query
+}
