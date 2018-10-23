@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	graphqlsample "../.."
+	graphqlsample "github.com/svobodal/graphqlsample"
 )
 
 type UserResolver struct {

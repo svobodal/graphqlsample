@@ -1,8 +1,8 @@
 package main
 
 import (
-	graphqlsample "../.."
 	"github.com/graphql-go/graphql"
+	graphqlsample "github.com/svobodal/graphqlsample"
 )
 
 var UserResolver *graphql.Object
